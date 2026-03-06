@@ -44,7 +44,7 @@ class Transaction(models.Model):
     status = models.CharField(max_length=7, choices=TRANSACTION_STATUS)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    idempotency_key = models.UUIDField(unique="True", editable=False, blank=True, null=True)
+    idempotency_key = models.UUIDField(unique=True, editable=False, blank=True, null=True)
 
 
 class Ledger(models.Model):

@@ -1,8 +1,10 @@
+from multiprocessing.util import LOGGER_NAME
+
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from user.serializers import UserSerializer
+from user.serializers import UserSerializer, LoginSerializer
 
 from services.onboarding_service import create_user_and_wallet
 
@@ -14,3 +16,13 @@ def create_wallet_account(request):
     serializer.is_valid(raise_exception=True)
     create_user_and_wallet(serializer.validated_data)
     return Response({"message":"Registration successful"}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def login(request):
+    serializer = LoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+
+    return Response(
+        serializer.validated_data,
+        status=status.HTTP_200_OK
+    )
