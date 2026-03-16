@@ -15,3 +15,9 @@ class UserAdmin(BaseUserAdmin):
             },
         ),
     )
+
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.is_superuser:
+            return False
+        return super().has_delete_permission(request, obj)

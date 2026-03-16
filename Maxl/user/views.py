@@ -1,4 +1,4 @@
-from multiprocessing.util import LOGGER_NAME
+
 
 from django.shortcuts import render
 from rest_framework import status

@@ -13,11 +13,6 @@ class Wallet(models.Model):
         ('EUR', 'Euro'),
     )
 
-    STATUS = (
-        ('ACTIVE', 'Active'),
-        ('SUSPENDED', 'Suspended'),
-        ('FROZEN', 'Frozen'),
-    )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='wallet')
     wallet_number = models.CharField(max_length=10, unique=True,primary_key=True)

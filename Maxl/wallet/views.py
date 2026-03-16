@@ -5,9 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Wallet
-from .serializers import WalletTransferSerializer
+from .serializers import WalletTransferSerializer, DashboardSerializer
 from wallet.services.intra_transfer import transfer_wallet_to_wallet
 from django.shortcuts import render, get_object_or_404
+
+from .services.dashboard import get_dashboard_data
 
 
 # Create your views here.
@@ -36,3 +38,11 @@ def wallet_transfer(request):
         status = status.HTTP_201_CREATED
     )
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def dashboard(request):
+    user = request.user
+    dashboard_data = get_dashboard_data(user)
+    serializer = DashboardSerializer(dashboard_data)
+    return Response(serializer.data, status=status.HTTP_200_OK)

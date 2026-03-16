@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from wallet.models import Transaction
 from .models import User
 
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -42,3 +43,5 @@ class LoginSerializer(serializers.Serializer):
         }
 
         return data
+
+
