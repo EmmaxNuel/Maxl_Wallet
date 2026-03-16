@@ -11,7 +11,12 @@ class Wallet(models.Model):
         ('NGN', 'Naira'),
         ('USD', 'Dollar'),
         ('EUR', 'Euro'),
+    )
 
+    STATUS = (
+        ('ACTIVE', 'Active'),
+        ('SUSPENDED', 'Suspended'),
+        ('FROZEN', 'Frozen'),
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='wallet')
@@ -22,7 +27,8 @@ class Wallet(models.Model):
     status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
+    def __str__(self):
+        return f"{self.wallet_number}"
 
 class Transaction(models.Model):
     TRANSACTION_TYPE = (
@@ -36,7 +42,7 @@ class Transaction(models.Model):
         ('FAILED', 'Failed'),
     )
 
-    reference = models.CharField(max_length=10, unique=True, default= generate_reference_number())
+    reference = models.CharField(max_length=10,default= generate_reference_number)
     transaction_type = models.CharField(max_length=6, choices=TRANSACTION_TYPE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     sender = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='sender')
@@ -59,6 +65,10 @@ class Ledger(models.Model):
     entry_type = models.CharField(max_length=6, choices=TRANSACTION_TYPE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.wallet}"
+
 
 
 

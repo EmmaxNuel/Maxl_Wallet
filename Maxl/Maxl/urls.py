@@ -17,7 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 
+
+admin.site.site_header = 'MaxlWallet'
+admin.site.site_title = 'MaxlWallet Portal'
+admin.site.index_title = 'Welcome to MaxlWallet'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
+    path('wallet/', include('wallet.urls')),
 ]
